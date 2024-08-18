@@ -14,7 +14,7 @@ const Home = () => {
     const handleClick = () => {
         setName('hey there !')
     }
-
+    const [isPending, setIsPending] = useState(true);
 
 
     // const handleDelete = (id) => {
@@ -23,13 +23,17 @@ const Home = () => {
     // }
 
     useEffect(() => {
-        fetch('http://localhost:8000/blogs').then(
-            res => {
-                return res.json();
-            }
-        ).then(data => {
-            setBlogs(data)
-        })
+        setTimeout(() => {
+            fetch('http://localhost:8000/blogs').then(
+                res => {
+                    return res.json();
+                }
+            ).then(data => {
+                setBlogs(data);
+                setIsPending(false);
+            })
+        }, 1000)
+
 
     }, []);
     return (
@@ -42,7 +46,7 @@ const Home = () => {
                 backgroundColor: "#f1356d",
                 borderRadius: "8px"
             }}> Click me </button>
-
+            {isPending && <div style={{ paddingTop: "20px" }}>Loading...</div>}
             {blogs && <BlogList blogs={blogs} title="All Blogs!"
             //  handleDelete={handleDelete}
             />
