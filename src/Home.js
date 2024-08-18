@@ -3,11 +3,13 @@ import BlogList from "./BlogList";
 
 
 const Home = () => {
-    const [blogs, setBlogs] = useState([
-        { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
-        { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
-        { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
-    ])
+    const [blogs, setBlogs] = useState(null
+        //     [
+        //     { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
+        //     { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
+        //     { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
+        // ]
+    )
     const [name, setName] = useState('my name is maryiam');
     const handleClick = () => {
         setName('hey there !')
@@ -15,16 +17,21 @@ const Home = () => {
 
 
 
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter(blog => blog.id !== id);
-        setBlogs(newBlogs);
-    }
+    // const handleDelete = (id) => {
+    //     const newBlogs = blogs.filter(blog => blog.id !== id);
+    //     setBlogs(newBlogs);
+    // }
 
     useEffect(() => {
-        console.log('use effect');
-        console.log(name)
+        fetch('http://localhost:8000/blogs').then(
+            res => {
+                return res.json();
+            }
+        ).then(data => {
+            setBlogs(data)
+        })
 
-    }, [name]); // the name is a Dependencie
+    }, []);
     return (
 
         <div className="home">
@@ -36,9 +43,11 @@ const Home = () => {
                 borderRadius: "8px"
             }}> Click me </button>
 
-            <BlogList blogs={blogs} title="All Blogs!" handleDelete={handleDelete} />
-            <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="Marios's Blogs" handleDelete={handleDelete} />
-
+            {blogs && <BlogList blogs={blogs} title="All Blogs!"
+            //  handleDelete={handleDelete}
+            />
+            }
+            {/* <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="Marios's Blogs" handleDelete={handleDelete} />  */}
         </div>
 
 
