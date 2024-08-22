@@ -5,6 +5,8 @@ const Navbar = () => {
             <h1>Net Ninja Blog</h1>
             <div className="links">
                 <Link to="/">Home</Link>
+                <Link to="/react-query">react query</Link>
+
                 <Link to="/create" style={{
                     color: "white",
                     backgroundColor: "#f1356d",
